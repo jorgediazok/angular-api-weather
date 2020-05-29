@@ -14,4 +14,11 @@ export class AppComponent implements OnInit {
       (err) => console.log(err)
     );
   }
+  submitLocation(cityName: HTMLInputElement, countryCode: HTMLInputElement) {
+    console.log(cityName, countryCode);
+    cityName.value = '';
+    countryCode.value = '';
+    cityName.focus();
+    return false;
+  }
 }
