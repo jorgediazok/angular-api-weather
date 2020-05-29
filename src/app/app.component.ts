@@ -7,17 +7,27 @@ import { WeatherService } from './services/weather.service';
   styleUrls: ['./app.component.css'],
 })
 export class AppComponent implements OnInit {
+  weather;
+
   constructor(private weatherService: WeatherService) {}
-  ngOnInit() {
-    this.weatherService.getWeather('london', 'uk').subscribe(
-      (res) => console.log(res),
+
+  ngOnInit() {}
+
+  getWeather(cityName: string, countryCode: string) {
+    this.weatherService.getWeather(cityName, countryCode).subscribe(
+      (res) => (this.weather = res),
       (err) => console.log(err)
     );
   }
+
   submitLocation(cityName: HTMLInputElement, countryCode: HTMLInputElement) {
-    console.log(cityName, countryCode);
-    cityName.value = '';
-    countryCode.value = '';
+    if (cityName.value && countryCode.value) {
+      this.getWeather(cityName.value, countryCode.value);
+      cityName.value = '';
+      countryCode.value = '';
+    } else {
+      alert('Please insert some values');
+    }
     cityName.focus();
     return false;
   }
